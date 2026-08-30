@@ -1,0 +1,16 @@
+EMIPredict AI - Exploratory Data Analysis: Business Insights
+=================================================================
+Dataset: 402,748 records across 5 EMI scenarios.
+Eligibility split -> Eligible: 18.3% | High_Risk: 4.3% | Not_Eligible: 77.4%
+The dataset is heavily imbalanced toward Not_Eligible applicants, reflecting realistic conservative lending patterns.
+
+Strongest predictors of max_monthly_emi: financial_health_score, expense_to_income_ratio, affordability_ratio.
+
+Eligibility rate by scenario (highest to lowest):
+  - E-commerce Shopping EMI: 26.2% eligible
+  - Home Appliances EMI: 25.9% eligible
+  - Education EMI: 17.6% eligible
+  - Personal Loan EMI: 11.3% eligible
+  - Vehicle EMI: 10.5% eligible
+
+Average credit score by outcome: {'Eligible': 725.0, 'High_Risk': 716.0, 'Not_Eligible': 694.0}

@@ -46,7 +46,8 @@ tab1, tab2, tab3, tab4 = st.tabs([
 with tab1:
     col1, col2 = st.columns(2)
     with col1:
-        fig = px.histogram(df_filtered, x="emi_eligibility", color="emi_eligibility",
+        fig = px.histogram(df_filtered, x="emi_eligibility",
+                            color_discrete_sequence=["#0FBF9F"],
                             title="Eligibility Distribution")
         st.plotly_chart(fig, width="stretch")
     with col2:

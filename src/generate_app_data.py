@@ -36,11 +36,18 @@ def main():
     print(f"Full dataset: {len(df):,} rows")
 
     print(f"Building {SAMPLE_FRACTION:.0%} stratified sample (by emi_eligibility)...")
-    sample = df.groupby("emi_eligibility", group_keys=False).apply(
-        lambda g: g.sample(frac=SAMPLE_FRACTION, random_state=RANDOM_STATE)
+    # NOTE: previously used groupby(...).apply(lambda g: g.sample(...)), but
+    # newer pandas versions silently drop the grouping column from the
+    # result of .apply() in this pattern - the sample CSV shipped without
+    # "emi_eligibility" at all, which broke every chart on the Explore Data
+    # page that referenced it. groupby(...).sample(...) is the correct,
+    # version-safe way to do stratified sampling - it keeps all columns.
+    sample = df.groupby("emi_eligibility", group_keys=False).sample(
+        frac=SAMPLE_FRACTION, random_state=RANDOM_STATE
     ).reset_index(drop=True)
+    assert "emi_eligibility" in sample.columns, "Sanity check failed - column still missing!"
     sample.to_csv(SAMPLE_OUT_PATH, index=False)
-    print(f"Saved sample -> {SAMPLE_OUT_PATH} ({len(sample):,} rows)")
+    print(f"Saved sample -> {SAMPLE_OUT_PATH} ({len(sample):,} rows, {sample.shape[1]} columns)")
 
     summary = {
         "n_records": len(df),
